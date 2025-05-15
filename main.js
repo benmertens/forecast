@@ -34,7 +34,7 @@ L.control.scale({
 async function getPlaceName(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata)
+    //console.log(jsondata)
     return jsondata.display_name;
 }
 
