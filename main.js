@@ -33,22 +33,40 @@ L.control.scale({
 // MET Norway Vorhersage visualisieren
 async function showForecast(latlng) {
     //console.log("Popup erzeugen bei:", latlng);
-    let url= `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latlng.lat}&lon=${latlng.lng}`;
+    let url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latlng.lat}&lon=${latlng.lng}`;
     //console.log(url);
     let response = await fetch(url);
     let jsondata = await response.json();
     //console.log(jsondata);
+
+    // Popup erzeugen
+    let markup=`
+    <ul>
+        <li>Luftdruck (hPa): air_pressure_at_sea_level</li>
+        <li>Lufttemperatur (°C): air_temperature</li>
+        <li>Bewölkungsgrad (%): cloud_area_fraction</li>
+        <li>Luftfeuchtigkeit (%): relative_humidity</li>
+        <li>Windrichtung (°): wind_from_direction</li>
+        <li>Windgeschwindigkeit (km/h): wind_speed</li>
+    </ul>
+    `;
+
+    L.popup([
+        latlng.lat, latlng.lng
+    ], {
+        content: markup
+    }).openOn(overlays.forecast);
 }
 
 // auf Kartenklick reagieren, zeigt einem die Koordinaten in der Konsole an
-map.on("click", function(evt){
+map.on("click", function (evt) {
     //console.log(evt, evt.latlng);
     showForecast(evt.latlng);
 })
 
 // Klick auf Innsbruck simulieren
 map.fire("click", {
-    latlng:{
+    latlng: {
         lat: ibk.lat,
         lng: ibk.lng,
     }
