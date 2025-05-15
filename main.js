@@ -73,6 +73,14 @@ async function showForecast(latlng) {
         markup += `<img src="icons/${symbol}.svg" style="width:32px" title="${time.toLocaleString()}">`;
     }
 
+    // Links zu den JSON-Daten
+    markup +=`
+    <p>
+        <a href="${url}" target="forecast"> Daten downloaden</a> |
+        <a href="${osmUrl}" target="forecast"> OSM Details zum Ort</a>
+    </p>
+    `;
+
     L.popup([
         latlng.lat, latlng.lng
     ], {
