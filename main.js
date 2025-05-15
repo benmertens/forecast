@@ -29,3 +29,9 @@ let layerControl = L.control.layers({
 L.control.scale({
     imperial: false,
 }).addTo(map);
+
+
+// auf Kartenklick reagieren, zeigt einem die Koordinaten in der Konsole an
+map.on("click", function(evt){
+    console.log(evt, evt.latlng);
+})
