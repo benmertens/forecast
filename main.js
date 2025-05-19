@@ -101,3 +101,59 @@ map.fire("click", {
         lng: ibk.lng,
     }
 })
+
+// Windlayer (Pfeile)
+async function loadWindLayer() {
+    const response = await fetch('https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json');
+    const data = await response.json();
+
+    var velocityLayer = L.velocityLayer({
+        displayValues: true,
+        displayOptions: {
+            // label prefix
+            velocityType: "Wind",
+
+            // leaflet control position
+            position: "bottomleft",
+
+            // no data at cursor
+            emptyString: "Keine Winddaten verfügbar",
+
+            // angle convention (optional, hier aus Vorlage übernommen)
+            angleConvention: "bearingCW",
+
+            // display cardinal direction alongside degrees
+            showCardinal: true,
+
+            // one of: ['ms', 'k/h', 'mph', 'kt']
+            speedUnit: "km/h",
+
+            // direction label prefix
+            directionString: "Richtung",
+
+            // speed label prefix
+            speedString: "Geschwindigkeit (km/h)",
+        },
+        data: data, // JSON-Winddaten
+
+        // OPTIONAL
+        minVelocity: 0,
+        maxVelocity: 20,
+        velocityScale: 0.005,
+        colorScale: [
+            "#3288bd", "#66c2a5", "#abdda4", "#e6f598",
+            "#fee08b", "#fdae61", "#f46d43", "#d53e4f"
+        ],
+        onAdd: null,
+        onRemove: null,
+        opacity: 0.97,
+
+        paneName: "overlayPane"
+    });
+
+    velocityLayer.addTo(map); // fügt den Layer der Leaflet-Karte hinzu
+
+}
+
+// Funktion aufrufen
+loadWindLayer();
