@@ -67,14 +67,14 @@ async function showForecast(latlng) {
     `;
 
     // Wettericons für die nächsten 24 Stunden in 3 Stunden Schritten
-    for (let i=0; i<=24; i+=3){
+    for (let i = 0; i <= 24; i += 3) {
         let symbol = jsondata.properties.timeseries[i].data.next_1_hours.summary.symbol_code;
-        let time = new Date (jsondata.properties.timeseries[i].time);
+        let time = new Date(jsondata.properties.timeseries[i].time);
         markup += `<img src="icons/${symbol}.svg" style="width:32px" title="${time.toLocaleString()}">`;
     }
 
     // Links zu den JSON-Daten
-    markup +=`
+    markup += `
     <p>
         <a href="${url}" target="forecast"> Daten downloaden</a> |
         <a href="${osmUrl}" target="forecast"> OSM Details zum Ort</a>
