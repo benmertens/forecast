@@ -121,9 +121,9 @@ fetch('https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json')
                 directionString: "Direction",
                 speedString: "Speed",
             },
-        maxVelocity: 10,
-        velocityScale: 0.005,
-        opacity: 0.97,
+            maxVelocity: 10,
+            velocityScale: 0.005,
+            opacity: 0.97,
         });
         velocityLayer.addTo(overlays.richtung)
-    });
+    })
