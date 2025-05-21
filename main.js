@@ -112,21 +112,18 @@ fetch('https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json')
             data: data,
             displayValues: true,
             displayOptions: {
-                velocityType: "Global Wind",
+                velocityType: "Wind",
                 position: "bottomleft",
-                emptyString: "No velocity data",
-                angleConvention: "bearingCW",
-                showCardinal: false,
+                emptyString: "keine Winddaten",
+                angleConvention: "meteo",
+                showCardinal: true,
                 speedUnit: "ms",
                 directionString: "Direction",
                 speedString: "Speed",
             },
-            maxVelocity: 10,
+        maxVelocity: 10,
+        velocityScale: 0.005,
+        opacity: 0.97,
         });
         velocityLayer.addTo(overlays.richtung)
     });
-
-// Test:
-// async function loadWindLayer() {
-// const response = await fetch('https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json');
-//const data = await response.json();
