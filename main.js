@@ -12,8 +12,7 @@ let map = L.map("map").setView([ibk.lat, ibk.lng], 5);
 // thematische Layer
 let overlays = {
     forecast: L.featureGroup().addTo(map),
-    wind: L.featureGroup().addTo(map),
-    richtung: L.featureGroup().addTo(map)
+    wind: L.featureGroup().addTo(map)
 }
 
 // Layer Control
@@ -24,7 +23,6 @@ let layerControl = L.control.layers({
 }, {
     "Wettervorhersage MET Norway": overlays.forecast,
     "ECMWF Windvorhersage": overlays.wind,
-    "Windrichtung": overlays.richtung,
 }).addTo(map);
 
 // Maßstab
@@ -39,6 +37,28 @@ async function getPlaceName(url) {
     //console.log(jsondata)
     return jsondata.display_name;
 }
+
+// ECMWF Windanimation mit Leaflet Velocity
+async function loadWind(url) {
+    let response = await fetch(url);
+    let jsondata = await response.json();
+    console.log(jsondata)
+    L.velocityLayer({
+        data: jsondata,
+        lineWidth: 2,
+        displayOptions: {
+                velocityType: "Wind",
+                position: "bottomleft",
+                emptyString: "keine Winddaten",
+                angleConvention: "meteo",
+                showCardinal: true,
+                speedUnit: "ms",
+                directionString: "Direction",
+                speedString: "Speed",
+            },
+    }).addTo(overlays.wind);
+}
+loadWind("https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json");
 
 // MET Norway Vorhersage visualisieren
 async function showForecast(latlng) {
@@ -103,27 +123,3 @@ map.fire("click", {
         lng: ibk.lng,
     }
 })
-
-// Velocity Layer
-fetch('https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json')
-    .then(res => res.json())
-    .then(data => {
-        const velocityLayer = L.velocityLayer({
-            data: data,
-            displayValues: true,
-            displayOptions: {
-                velocityType: "Wind",
-                position: "bottomleft",
-                emptyString: "keine Winddaten",
-                angleConvention: "meteo",
-                showCardinal: true,
-                speedUnit: "ms",
-                directionString: "Direction",
-                speedString: "Speed",
-            },
-            maxVelocity: 10,
-            velocityScale: 0.005,
-            opacity: 0.97,
-        });
-        velocityLayer.addTo(overlays.richtung)
-    })
