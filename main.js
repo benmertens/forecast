@@ -47,15 +47,15 @@ async function loadWind(url) {
         data: jsondata,
         lineWidth: 2,
         displayOptions: {
-                velocityType: "Wind",
-                position: "bottomleft",
-                emptyString: "keine Winddaten",
-                angleConvention: "meteo",
-                showCardinal: true,
-                speedUnit: "ms",
-                directionString: "Direction",
-                speedString: "Speed",
-            },
+            velocityType: "Wind",
+            position: "bottomleft",
+            emptyString: "keine Winddaten",
+            angleConvention: "meteo",
+            showCardinal: true,
+            speedUnit: "ms",
+            directionString: "Direction",
+            speedString: "Speed",
+        },
     }).addTo(overlays.wind);
 }
 loadWind("https://geographie.uibk.ac.at/data/ecmwf/data/wind-10u-10v-europe.json");
